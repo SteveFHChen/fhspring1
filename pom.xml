@@ -1,0 +1,181 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.fh</groupId>
+  <artifactId>fhspring1</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>fhspring1</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+	<dependency>    
+		<groupId>org.mockito</groupId>    
+		<artifactId>mockito-all</artifactId>    
+		<version>1.8.5</version>    
+		<scope>test</scope>    
+	</dependency>    
+	<!-- <dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-test</artifactId>
+	    <version>4.3.7.RELEASE</version>
+	</dependency> -->
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>4.1.5.RELEASE</version>
+    </dependency>
+    
+    <dependency>
+		<groupId>org.aspectj</groupId>
+		<artifactId>aspectjrt</artifactId>
+		<version>1.8.2</version>
+	</dependency>
+	<dependency>
+		<groupId>org.aspectj</groupId>
+		<artifactId>aspectjweaver</artifactId>
+		<version>1.8.2</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>javax.mail</groupId>
+	    <artifactId>mail</artifactId>
+	    <version>1.4.6</version>
+	</dependency>
+	
+	<!-- Study spring transaction management -->
+	<!-- spring jdbc dependents on spring tx -->
+	<dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>4.1.5.RELEASE</version>
+    </dependency>
+    
+    <!-- Use Spring Ibatis -->
+    <dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-ibatis</artifactId>
+	    <version>2.0-rc2</version>
+	    <!-- <version>2.0.8</version> -->
+	</dependency>
+	
+	<!-- Use github Ibatis -->
+	<!-- <dependency>
+	    <groupId>com.github.linpn</groupId>
+	    <artifactId>ibatis</artifactId>
+	    <version>2.3.8</version>
+	</dependency> -->
+	
+	<!-- Use Apache Ibatis, this solution is used in JS BOC EHR project -->
+	<!-- <dependency>
+	    <groupId>org.apache.ibatis</groupId>
+	    <artifactId>ibatis-core</artifactId>
+	    <version>3.0</version>
+	</dependency> -->
+	<!-- this jar is used by spring-ibatis and apache ibatis-core -->
+	<dependency>
+	    <groupId>org.apache.ibatis</groupId>
+	    <artifactId>ibatis-sqlmap</artifactId>
+	    <!-- <version>3.0-beta-10</version> -->
+	    <version>2.3.4.726</version>
+	</dependency>
+	
+	<!-- 使用数据源，提供给Ibatis -->
+    <dependency>
+    	<groupId>c3p0</groupId>
+    	<artifactId>c3p0</artifactId>
+    	<version>0.9.1.2</version>
+    </dependency>
+    
+    <dependency>
+    	<groupId>commons-dbcp</groupId>
+    	<artifactId>commons-dbcp</artifactId>
+    	<version>1.4</version>
+    </dependency>
+	
+	<!-- Test Spring Integration Module -->
+	<dependency>
+	    <groupId>org.springframework.integration</groupId>
+	    <artifactId>spring-integration-core</artifactId>
+	    <version>4.3.7.RELEASE</version>
+	</dependency>
+	<!-- The spring messaging and spring retry will be dependencied by spring integration core -->
+	
+	<!-- <dependency>
+	    <groupId>org.springframework.integration</groupId>
+	    <artifactId>spring-integration-ftp</artifactId>
+	    <version>4.3.7.RELEASE</version>
+	</dependency> -->
+	<!-- The spring file and commons-io, commons-net, spring-context-support will be dependencied by spring integration file -->
+	
+	<!-- <dependency>
+	    <groupId>org.springframework.integration</groupId>
+	    <artifactId>spring-integration-sftp</artifactId>
+	    <version>4.3.7.RELEASE</version>
+	</dependency> -->
+	<!-- The spring integration stream and jsch will be dependencied. -->
+	
+	<!-- <dependency>
+	    <groupId>org.springframework.integration</groupId>
+	    <artifactId>spring-integration-jms</artifactId>
+	    <version>4.3.7.RELEASE</version>
+	</dependency> -->
+	<!-- The spring-jms will be dependencied. -->
+	
+	<!-- <dependency>
+	    <groupId>org.springframework.integration</groupId>
+	    <artifactId>spring-integration-rmi</artifactId>
+	    <version>4.3.7.RELEASE</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>org.springframework.integration</groupId>
+	    <artifactId>spring-integration-http</artifactId>
+	    <version>4.3.7.RELEASE</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>org.springframework.integration</groupId>
+	    <artifactId>spring-integration-ws</artifactId>
+	    <version>4.3.7.RELEASE</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>org.springframework.integration</groupId>
+	    <artifactId>spring-integration-jdbc</artifactId>
+	    <version>4.3.7.RELEASE</version>
+	</dependency> -->
+	
+	<!-- Testing Spring Batch Module -->
+	<!-- Also need Spring-JDBC  -->
+	<dependency>
+		<groupId>org.springframework.batch</groupId>
+		<artifactId>spring-batch-core</artifactId>
+		<version>3.0.7.RELEASE</version>
+	</dependency>
+	<!-- <dependency>
+		<groupId>org.springframework.batch</groupId>
+		<artifactId>spring-batch-infrastructure</artifactId>
+		<version>2.1.7.RELEASE</version>
+	</dependency> -->
+	<dependency>
+    	<groupId>org.apache.commons</groupId>
+    	<artifactId>commons-dbcp2</artifactId>
+    	<version>2.1.1</version>
+    </dependency>
+    
+  </dependencies>
+</project>

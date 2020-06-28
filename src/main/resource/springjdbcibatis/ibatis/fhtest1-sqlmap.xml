@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "sql-map-2.dtd">
+<sqlMap>
+	<select id="fhq1" resultClass="com.fh.dto.Person">
+		select id, name from t1
+	</select>
+	<!-- <select id="fhq2" parameterClass="java.lang.String" resultClass="com.fh.dto.Person">
+		select id, name from user1 where name=#name#
+	</select>
+	<select id="fhq3" parameterClass="java.util.Map" resultClass="com.fh.dto.Person">
+		select id, name from user1 where name=#name1# or name=#name2#
+	</select> -->
+	
+	<insert id="insertPerson1" parameterClass="com.fh.dto.Person">
+	    insert into t1(id, name) values($id$, #name#)
+	</insert>
+	
+	<delete id="deletePerson1" parameterClass="com.fh.dto.Person">
+	    delete from t1 
+		<dynamic prepend="where ">
+		    <isNotEmpty prepend="and" property="id"> 
+            	id=$id$
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="name"> 
+            	name=#name#
+            </isNotEmpty>
+        </dynamic>
+	</delete>
+</sqlMap>

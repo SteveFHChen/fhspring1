@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:cxt="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx 
+	    http://www.springframework.org/schema/tx/spring-tx.xsd">
+	
+	<bean id="student" class="com.fh.springaop.aop_xml.StudentImpl"></bean>
+	<bean id="testAspect" class="com.fh.springaop.aop_xml.TestAspect"></bean>
+	
+	<!-- 写法1：使用aspect进行处理 -->
+	<aop:config>
+		<aop:aspect id="fhasp1" ref="testAspect">
+			<aop:before pointcut="execution(* com.fh.springaop.aop_xml.StudentImpl.*(..))" method="doBefore"/>
+			<aop:after pointcut="execution(* com.fh.springaop.aop_xml.StudentImpl.*(..))" method="doAfter"/>
+		</aop:aspect>
+	</aop:config>
+	
+	<!-- 写法2：使用aspect进行处理 -->
+	<!-- <aop:config>
+		<aop:pointcut expression="execution(* com.fh.springaop.aop_xml.StudentImpl.*(..))" id="fhpc1"/> -->
+		<!-- <aop:advisor advice-ref=""/> -->
+		<!-- <aop:aspect id="fhasp1" ref="testAspect"> -->
+			<!-- pointcut fhpc1的定义也可以放在这里，只是放在这里就只能被这个aspect用 -->
+			<!-- <aop:before pointcut-ref="fhpc1" method="doBefore"/>
+			<aop:after pointcut-ref="fhpc1" method="doAfter"/>
+		</aop:aspect>
+	</aop:config> -->
+	
+	<!-- 写法3：使用advice进入处理，而不是使用aspect进行处理 -->
+	<!-- <bean id="myadvice" class="com.fh.springaop.aop_xml.MyAdvice_Aop"></bean>
+	<aop:config>
+		<aop:pointcut expression="execution(* com.fh.springaop.aop_xml.StudentImpl.*(..))" id="fhpc1"/>
+		<aop:advisor pointcut-ref="fhpc1" advice-ref="myadvice"/>
+	</aop:config>
+	这里会用到<aop:advisor/> -->
+	
+	<!-- <tx:advice id="fhadvice1" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED"/>
+		</tx:attributes>
+	</tx:advice> -->
+</beans>

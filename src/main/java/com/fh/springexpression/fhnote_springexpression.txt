@@ -1,0 +1,24 @@
+
+
+所有的SpEL都支持XML和Annotation两种方式，格式：#{ SpEL expression }
+
+一、      第一个Spring EL例子—— HelloWorld Demo
+二、      Spring EL Method Invocation——SpEL 方法调用
+三、      Spring EL Operators——SpEL 操作符
+四、      Spring EL 三目操作符condition?true:false
+	Xml配置如下，注意：应该用“&lt；”代替小于号“<”
+五、      Spring EL 操作List、Map集合取值
+
+Spring EL Operators——SpEL 操作符
+　　Spring EL 支持大多数的数学操作符、逻辑操作符、关系操作符。
+　　1.关系操作符
+　　包括：等于 (==, eq)，不等于 (!=, ne)，小于 (<, lt),，小于等于(<= , le)，大于(>, gt)，大于等于 (>=, ge)
+　　2.逻辑操作符
+　　包括：and，or，and not(!)
+　　3.数学操作符
+　　包括：加 (+)，减 (-)，乘 (*)，除 (/)，取模 (%)，幂指数 (^)。
+
+以下是等同的xml配置。
+注意，类似小于号“<”，或者小于等于“<=”，在xml中是不直接支持的，必须用等同的文本表示方法表示，
+例如，“<”用“lt”替换；“<=”用“le”替换，等等。
+

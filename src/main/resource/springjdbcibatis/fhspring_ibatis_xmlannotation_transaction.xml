@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans.xsd    
+        http://www.springframework.org/schema/context     
+        http://www.springframework.org/schema/context/spring-context.xsd    
+       http://www.springframework.org/schema/tx     
+       http://www.springframework.org/schema/tx/spring-tx.xsd    
+       http://www.springframework.org/schema/aop     
+       http://www.springframework.org/schema/aop/spring-aop.xsd   
+      ">
+    <!-- spring加载properties配制文件 方式1 -->
+	<!-- <context:property-placeholder location="classpath:/springjdbcibatis/db.properties"/> -->
+		<!-- 如果有多个properties，则用逗号隔开 -->
+    <!-- spring加载properties配制文件 方式2 -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>classpath:/springjdbcibatis/db.properties</value>
+            <!-- <value>classpath:2.properties</value>
+            <value>classpath:3.properties</value> -->
+            <!-- 如果有多个properties，则用多个<value> -->
+        </property>
+    </bean>
+    
+    <!-- 利用spring配制数据源 -->
+    <!-- 方式1：使用c3p0(实验成功) -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+    	<property name="driverClass" value="${jdbc.connect.driver}"></property>
+    	<property name="jdbcUrl" value="${jdbc.connect.url}"></property>
+    	<property name="user" value="${jdbc.connect.user}"></property>
+    	<property name="password" value="${jdbc.connect.password}"></property>
+    </bean>
+    <!-- 方式2：使用dbcp(实验成功) -->
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.connect.driver}"></property>
+    	<property name="url" value="${jdbc.connect.url}"></property>
+    	<property name="username" value="${jdbc.connect.user}"></property>
+    	<property name="password" value="${jdbc.connect.password}"></property>
+	</bean> -->
+    <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation">
+			<!-- sql map配置文件的入口文件，如果添加了一个sqlmap文件，只要在下面的入口文件中加入相应的选项即可 -->
+			<value>classpath:/springjdbcibatis/ibatis/fhtest1-config.xml</value>
+		</property>
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 报错：java.lang.NoClassDefFoundError: com/ibatis/common/xml/NodeletException 
+		 原因：没有加载spring-ibatis Jar包。 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!-- enable autowire -->  
+    <context:annotation-config />  
+      
+    <!-- (Annotation方式配置services)enable component scanning (beware that this   
+        does not enable mapper scanning!) -->  
+    <context:component-scan base-package="com.fh.springibatis" />
+  
+    <!-- Transaction - Method 1: @Transactional -->
+    <!-- enable transaction demarcation with annotations -->  
+    <!-- <tx:annotation-driven transaction-manager="transactionManager" /> -->
+	
+    <!-- Transaction - Method 2: AOP -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+	  <tx:attributes>
+	    <!-- tx:method的属性:
+	          * name 是必须的,表示与事务属性关联的方法名(业务方法名),对切入点进行细化。通配符（*）可以用来指定一批关联到相同的事务属性的方法。
+	                    如：'get*'、'handle*'、'on*Event'等等.
+	          * propagation  不是必须的 ，默认值是REQUIRED 
+	                            表示事务传播行为, 包括REQUIRED,SUPPORTS,MANDATORY,REQUIRES_NEW,NOT_SUPPORTED,NEVER,NESTED
+	          * isolation    不是必须的 默认值DEFAULT 
+	                            表示事务隔离级别(数据库的隔离级别) 
+	          * timeout      不是必须的 默认值-1(永不超时)
+	                            表示事务超时的时间（以秒为单位） 
+	          
+	          * read-only    不是必须的 默认值false不是只读的 
+	                            表示事务是否只读？ 
+	          
+	          * rollback-for 不是必须的   
+	                            表示将被触发进行回滚的 Exception(s)；以逗号分开。
+	                            如：'com.foo.MyBusinessException,ServletException' 
+	          
+	          * no-rollback-for 不是必须的  
+	                              表示不被触发进行回滚的 Exception(s)；以逗号分开。
+	                              如：'com.foo.MyBusinessException,ServletException'
+	                              
+	                              
+	        任何 RuntimeException 将触发事务回滚，但是任何 checked Exception 将不触发事务回滚                      
+	     -->
+	     <tx:method name="add*" propagation="REQUIRED" isolation="DEFAULT" read-only="false"/>
+	     <tx:method name="update*" propagation="REQUIRED" isolation="DEFAULT" read-only="false"/>
+	     <tx:method name="delete*" propagation="REQUIRED" isolation="DEFAULT" read-only="false"/>
+	     <tx:method name="*" rollback-for="Exception" />
+	     <!-- 其他的方法之只读的 -->
+	     <tx:method name="*" read-only="true"/>
+	  </tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<!--配置事务切点 -->
+		<aop:pointcut id="services"
+			expression="execution(* com.fh.springibatis.service.impl.*.*(..))" />
+		<aop:advisor pointcut-ref="services" advice-ref="txAdvice" />
+	</aop:config>
+</beans>

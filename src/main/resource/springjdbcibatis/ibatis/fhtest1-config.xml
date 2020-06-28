@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "sql-map-config-2.dtd">
+<sqlMapConfig>
+	<!-- <transactionManager type="JDBC">
+		<dataSource type="SIMPLE">
+			<property name="JDBC.Driver" value="oracle.jdbc.driver.OracleDriver" />
+			<property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@192.168.2.102:1522/prod" />
+			<property name="JDBC.Username" value="system" />
+			<property name="JDBC.Password" value="oracle1" />
+		</dataSource>
+	</transactionManager> -->
+	<!-- 手动加载ibatis配制，就使用上面的配制；如果是spring+ibatis，那就不需要上面的配制了 -->
+	<sqlMap resource="springjdbcibatis/ibatis/fhtest1-sqlmap.xml" />
+	
+	<!-- 以下都是错误的写法 -->
+	<!-- <sqlMap resource="fhtest1-sqlmap.xml" />
+	<sqlMap resource="/springjdbcibatis/ibatis/fhtest1-sqlmap.xml" /> -->
+	
+</sqlMapConfig>

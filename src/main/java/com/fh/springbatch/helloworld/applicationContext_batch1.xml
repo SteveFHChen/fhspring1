@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+	http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+	>
+	
+	<context:property-placeholder location="classpath:com/fh/springbatch/helloworld/fhspringbatch1.properties"/>
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url">
+			<value><![CDATA[jdbc:mysql://localhost:3306/springbatch1?characterEncoding=UTF-8]]></value>
+		</property>
+		<property name="username" value="root" />
+		<property name="password" value="root123" />
+	</bean>
+
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- Spring Batch foundation configure -->
+	<bean id="jobRepository" class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
+		<property name="dataSource" ref="dataSource"/> 
+		<property name="transactionManager" ref="txManager"/>
+	</bean>
+	
+	<bean id="jobLauncher"  class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository"></property>
+	</bean>
+	
+	<!-- Simple job configuration -->
+	<bean id="simpleJob" class="org.springframework.batch.core.job.SimpleJob" abstract="true">
+		<property name="jobRepository" ref="jobRepository"></property>
+		<property name="restartable" value="true"></property>
+	</bean>
+	
+	<!-- Tasklet step configuration -->
+	<bean id="taskletStep" class="org.springframework.batch.core.step.tasklet.TaskletStep">
+		<property name="transactionManager" ref="txManager"></property>
+		<property name="jobRepository" ref="jobRepository"></property>
+	</bean>
+	
+	<bean id="helloTaskLet" class="com.fh.springbatch.helloworld.HelloTasklet"></bean>
+	<bean id="helloReader" class="com.fh.springbatch.helloworld.HelloReader"></bean>
+	<bean id="helloProcessor" class="com.fh.springbatch.helloworld.HelloProcessor"></bean>
+	<bean id="helloWriter" class="com.fh.springbatch.helloworld.HelloWriter"></bean>
+	<bean id="helloDecider" class="com.fh.springbatch.helloworld.HelloDecider"></bean>
+
+	<!-- Configure business logic -->
+	<batch:job id="jobHello" parent="simpleJob">
+		<batch:step id="step1" next="step2" parent="taskletStep">
+			<batch:tasklet ref="helloTaskLet"></batch:tasklet>
+		</batch:step>
+		
+		<batch:step id="step2" next="decision1" parent="taskletStep">
+			<batch:tasklet>
+				<!-- <batch:transaction-attributes isolation="DEFAULT" propagation="REQUIRED" timeout="3" /> -->
+				<batch:chunk reader="helloReader" processor="helloProcessor" writer="helloWriter" commit-interval="3"/>
+			</batch:tasklet>
+		</batch:step>
+		
+		<batch:decision id="decision1" decider="helloDecider">
+			<batch:next on="FHNext" to="step3"/>
+			<batch:end on="FHEnd"/>
+			<batch:fail on="FHFail"/>
+			<!-- <batch:stop on="FHStop" restart=""/> -->
+		</batch:decision>
+		
+		<batch:step id="step3" parent="taskletStep">
+			<batch:tasklet ref="helloTaskLet"></batch:tasklet>
+		</batch:step>
+	</batch:job>
+
+	<bean id="helloReader1" class="com.fh.springbatch.helloworld.HelloReader" scope="step">
+	</bean>
+
+	<bean id="helloProcessor1" class="com.fh.springbatch.helloworld.HelloProcessor" scope="step">
+	</bean>
+
+	<bean id="helloWriter1" class="com.fh.springbatch.helloworld.HelloWriter" scope="step">
+	</bean>
+
+</beans>

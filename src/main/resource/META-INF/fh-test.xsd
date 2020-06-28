@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.fh.com/schema/fh"  
+    xmlns:tns="http://www.fh.com/schema/user" elementFormDefault="qualified">  
+    <element name="hi">  
+        <complexType>  
+            <attribute name="msg" type="string"/>  
+        </complexType>  
+    </element>  
+</schema>  

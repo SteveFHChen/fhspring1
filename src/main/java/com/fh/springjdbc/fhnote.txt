@@ -1,0 +1,90 @@
+Spring中jdbcTemplate的用法实例（一）
+http://1358440610-qq-com.iteye.com/blog/1826816
+配置JdbcTemplate；
+要使用Jdbctemplate 对象来完成jdbc 操作。通常情况下，有三种种方式得到JdbcTemplate 对象。 
+      第一种方式：我们可以在自己定义的DAO 实现类中注入一个DataSource 引用来完 成JdbcTemplate 的实例化。也就是它是从外部“注入” DataSource 到DAO 中，然后 自己实例化JdbcTemplate，然后将DataSource 设置到JdbcTemplate 对象中。 
+      第二种方式： 在 Spring 的 IoC 容器中配置一个 JdbcTemplate 的 bean，将 DataSource 注入进来，然后再把JdbcTemplate 注入到自定义DAO 中。 
+      第三种方式: Spring 提供了 org.springframework.jdbc.core.support.JdbcDaoSupport 类 ， 这 个 类 中 定 义 了 JdbcTemplate 属性，也定义了DataSource 属性，当设置DataSource 属性的时候，会创 建jdbcTemplate 的实例，所以我们自己编写的DAO 只需要继承JdbcDaoSupport 类， 然后注入DataSource 即可。提倡采用第三种方法。虽然下面的用法中采用了前两种方法
+
+Spring JdbcTemplate方法详解
+http://blog.csdn.net/dyllove98/article/details/7772463
+
+JdbcTemplate主要提供以下五类方法：
+	execute方法：可以用于执行任何SQL语句，一般用于执行DDL语句；
+	update方法及batchUpdate方法：update方法用于执行新增、修改、删除等语句；batchUpdate方法用于执行批处理相关语句；
+	query方法及queryForXXX方法：用于执行查询相关语句；
+	call方法：用于执行存储过程、函数相关语句。
+ 
+JdbcTemplate类支持的回调类：
+	预编译语句及存储过程创建回调：用于根据JdbcTemplate提供的连接创建相应的语句；
+	     PreparedStatementCreator：通过回调获取JdbcTemplate提供的Connection，由用户使用该Conncetion创建相关的PreparedStatement；
+	     CallableStatementCreator：通过回调获取JdbcTemplate提供的Connection，由用户使用该Conncetion创建相关的CallableStatement；
+	预编译语句设值回调：用于给预编译语句相应参数设值；
+	     PreparedStatementSetter：通过回调获取JdbcTemplate提供的PreparedStatement，由用户来对相应的预编译语句相应参数设值；
+	     BatchPreparedStatementSetter：；类似于PreparedStatementSetter，但用于批处理，需要指定批处理大小；
+	自定义功能回调：提供给用户一个扩展点，用户可以在指定类型的扩展点执行任何数量需要的操作；
+	     ConnectionCallback：通过回调获取JdbcTemplate提供的Connection，用户可在该Connection执行任何数量的操作；
+	     StatementCallback：通过回调获取JdbcTemplate提供的Statement，用户可以在该Statement执行任何数量的操作；
+	     PreparedStatementCallback：通过回调获取JdbcTemplate提供的PreparedStatement，用户可以在该PreparedStatement执行任何数量的操作；
+	     CallableStatementCallback：通过回调获取JdbcTemplate提供的CallableStatement，用户可以在该CallableStatement执行任何数量的操作；
+	结果集处理回调：通过回调处理ResultSet或将ResultSet转换为需要的形式；
+	     RowMapper：用于将结果集每行数据转换为需要的类型，用户需实现方法mapRow(ResultSet rs, int rowNum)来完成将每行数据转换为相应的类型。
+	     RowCallbackHandler：用于处理ResultSet的每一行结果，用户需实现方法processRow(ResultSet rs)来完成处理，在该回调方法中无需执行rs.next()，该操作由JdbcTemplate来执行，用户只需按行获取数据然后处理即可。
+	     ResultSetExtractor：用于结果集数据提取，用户需实现方法extractData(ResultSet rs)来处理结果集，用户必须处理整个结果集；
+	     
+
+使用jdbcTemplate查询返回自定义对象集合
+http://blog.csdn.net/u011332918/article/details/45560117
+1、在UserInfo.java中添加一个Map转换为UserInfo的方法
+2、使用jdbcTemplate.query(sql,RowMapper）方式实现
+3、 使用RowMapper实现接口方式，覆盖mapRow方法
+4、dao层使用
+
+
+方辉：好！图文并茂
+ibatis源码学习1_整体设计和核心流程
+http://www.cnblogs.com/doudouxiaoye/p/5694145.html
+ibatis源码学习2_初始化和配置文件解析
+http://www.cnblogs.com/doudouxiaoye/p/5694155.html
+ibatis源码学习3_源码包结构
+http://www.cnblogs.com/doudouxiaoye/p/5694211.html
+ibatis源码学习4_参数和结果的映射原理
+http://www.cnblogs.com/doudouxiaoye/p/5694225.html
+
+Spring + iBATIS完整示例
+http://blog.csdn.net/randyjiawenjie/article/details/7529314
+
+Ibatis动态SQL标签用法
+http://blog.csdn.net/linguihairoger/article/details/6891472
+对于一些特殊符号，如大于号>、小于号< 等需要写在<![CDATA[]]中方可有效，否则失效。
+注意这里的$ 如果字符串直接拼接要用$,#默认会在字符串变量前面加引号的
+1、动态SQL片段
+2、数字范围查询
+3、时间范围查询
+4、in查询
+5、like查询
+6、or条件
+7、where子查询
+9、函数的使用
+10、map结果集 
+
+
+
+
+
+spring事务的几种传播特性：
+1. PROPAGATION_REQUIRED: 如果存在一个事务，则支持当前事务。如果没有事务则开启
+2. PROPAGATION_SUPPORTS: 如果存在一个事务，支持当前事务。如果没有事务，则非事务的执行
+3. PROPAGATION_MANDATORY: 如果已经存在一个事务，支持当前事务。如果没有一个活动的事务，则抛出异常。
+4. PROPAGATION_REQUIRES_NEW: 总是开启一个新的事务。如果一个事务已经存在，则将这个存在的事务挂起。
+5. PROPAGATION_NOT_SUPPORTED: 总是非事务地执行，并挂起任何存在的事务。
+6. PROPAGATION_NEVER: 总是非事务地执行，如果存在一个活动事务，则抛出异常
+7. PROPAGATION_NESTED：如果一个活动的事务存在，则运行在一个嵌套的事务中. 如果没有活动事务, 则按TransactionDefinition.PROPAGATION_REQUIRED 属性执行
+
+Spring事务的隔离级别
+1. ISOLATION_DEFAULT： 这是一个PlatfromTransactionManager默认的隔离级别，使用数据库默认的事务隔离级别,另外四个与JDBC的隔离级别相对应
+2. ISOLATION_READ_UNCOMMITTED： 这是事务最低的隔离级别，它充许令外一个事务可以看到这个事务未提交的数据,这种隔离级别会产生脏读，不可重复读和幻像读。
+3. ISOLATION_READ_COMMITTED： 保证一个事务修改的数据提交后才能被另外一个事务读取。另外一个事务不能读取该事务未提交的数据
+4. ISOLATION_REPEATABLE_READ： 这种事务隔离级别可以防止脏读，不可重复读。但是可能出现幻像读,它除了保证一个事务不能读取另一个事务未提交的数据外，还保证了避免下面的情况产生(不可重复读)。
+5. ISOLATION_SERIALIZABLE 这是花费最高代价但是最可靠的事务隔离级别。事务被处理为顺序执行,除了防止脏读，不可重复读外，还避免了幻像读。
+

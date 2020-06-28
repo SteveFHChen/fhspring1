@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:int="http://www.springframework.org/schema/integration"
+	   xsi:schemaLocation="  
+		    http://www.springframework.org/schema/beans 
+		    http://www.springframework.org/schema/beans/spring-beans.xsd
+		    http://www.springframework.org/schema/integration
+		    http://www.springframework.org/schema/integration/spring-integration.xsd">
+		    
+   	<bean id="filterBean1" class="com.fh.springintegration.TestFilter1"/>
+   	<bean id="selectorBean1" class="com.fh.springintegration.FHMessageSelector1"/>
+	<bean id="splitterBean1" class="com.fh.springintegration.TestSplitter1"/>
+	<bean id="aggregatorBean1" class="com.fh.springintegration.FHAggregator1"/>
+	<bean id="serviceActivatorBean1" class="com.fh.springintegration.FHServiceActivator1"/>
+	
+	<int:channel id="simpleChannel"></int:channel>
+	<int:channel id="filteredChannel"></int:channel>
+	<!-- <int:channel id="splittedChannel"></int:channel> -->
+	<int:publish-subscribe-channel id="splittedChannel"></int:publish-subscribe-channel>
+	<int:channel id="aggregatedChannel"></int:channel>
+	<int:channel id="channel5"></int:channel>
+	
+	<int:filter id="filter1" ref="selectorBean1"
+	    input-channel="simpleChannel" output-channel="filteredChannel"></int:filter>
+	
+	<!-- Method 1: Configure with XML -->
+	<int:splitter id="splitter1" ref="splitterBean1" method="fhSplitter1"
+	    input-channel="filteredChannel" output-channel="splittedChannel"></int:splitter>
+	<!-- Method 1: Configure with annotation -->
+	<!-- <int:splitter id="splitter1" ref="splitterBean1"
+	    input-channel="filteredChannel" output-channel="splittedChannel"></int:splitter> -->
+	    
+	<int:router id="router1" input-channel="splittedChannel" default-output-channel="nullChannel"
+	    ignore-send-failures="false" expression="headers['testheader']">
+	    <int:mapping value="1" channel="terminal1"></int:mapping>
+	    <int:mapping value="2" channel="terminal2"></int:mapping>
+	    <int:mapping value="3" channel="terminal3"></int:mapping>
+	    <int:mapping value="4" channel="terminal4"></int:mapping>
+	    <int:mapping value="5" channel="channel5"></int:mapping>
+	</int:router>
+	
+	<int:outbound-channel-adapter id="terminal1" ref="splitterBean1" method="normalPrint"></int:outbound-channel-adapter>
+	<int:outbound-channel-adapter id="terminal2" ref="splitterBean1" method="normalPrint"></int:outbound-channel-adapter>
+	<int:outbound-channel-adapter id="terminal3" ref="splitterBean1" method="exceptionPrint"></int:outbound-channel-adapter>
+	<int:outbound-channel-adapter id="terminal4" ref="splitterBean1" method="normalPrint"></int:outbound-channel-adapter>
+	<int:outbound-channel-adapter id="terminal5" ref="splitterBean1" method="normalPrint"></int:outbound-channel-adapter>
+	
+	<!-- <int:aggregator id="aggregator1" ref="aggregatorBean1" method="fhAggregator1"
+	    input-channel="splittedChannel" output-channel="terminal4"></int:aggregator> -->
+	<int:aggregator id="aggregator1" ref="aggregatorBean1"
+	    input-channel="splittedChannel" output-channel="terminal4"></int:aggregator>
+	
+	<int:service-activator id="serviceActivator1" ref="serviceActivatorBean1"
+	    input-channel="channel5" output-channel="terminal5"></int:service-activator>
+</beans>

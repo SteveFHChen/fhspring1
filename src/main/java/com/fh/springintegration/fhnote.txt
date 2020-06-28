@@ -1,0 +1,46 @@
+org.springframework.integration	spring-integration-java-dsl	1.2.2.RELEASE  all (11)	15-May-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-test	4.3.9.RELEASE  all (71)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-event	4.3.9.RELEASE  all (76)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-rmi	4.3.9.RELEASE  all (76)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-file	4.3.9.RELEASE  all (76)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-jdbc	4.3.9.RELEASE  all (71)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-mongodb	4.3.9.RELEASE  all (65)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-syslog	4.3.9.RELEASE  all (50)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-gemfire	4.3.9.RELEASE  all (65)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-twitter	4.3.9.RELEASE  all (71)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-groovy	4.3.9.RELEASE  all (71)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-bom	4.3.9.RELEASE  all (40)	19-Apr-2017	pom  txt  
+org.springframework.integration	spring-integration-ftp	4.3.9.RELEASE  all (71)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-ws	4.3.9.RELEASE  all (76)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-scripting	4.3.9.RELEASE  all (65)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-zookeeper	4.3.9.RELEASE  all (21)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-jms	4.3.9.RELEASE  all (76)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-xml	4.3.9.RELEASE  all (76)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-xmpp	4.3.9.RELEASE  all (71)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-amqp	4.3.9.RELEASE  all (65)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-jpa	4.3.9.RELEASE  all (58)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-mail	4.3.9.RELEASE  all (76)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-stomp	4.3.9.RELEASE  all (21)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-ip	4.3.9.RELEASE  all (71)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-websocket	4.3.9.RELEASE  all (31)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-stream	4.3.9.RELEASE  all (76)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-redis	4.3.9.RELEASE  all (65)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-core	4.3.9.RELEASE  all (76)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-sftp	4.3.9.RELEASE  all (71)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-http	4.3.9.RELEASE  all (75)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-security	4.3.9.RELEASE  all (76)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-jmx	4.3.9.RELEASE  all (71)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-feed	4.3.9.RELEASE  all (71)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-mqtt	4.3.9.RELEASE  all (41)	19-Apr-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-smb	0.5.0.RELEASE	18-Jan-2017	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-kafka	2.1.0.RELEASE  all (11)	20-Sep-2016	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-aws	1.0.0.RELEASE  all (2)	26-Jul-2016	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-tuple	1.0.0.RELEASE	07-May-2016	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-cassandra	0.5.0.RELEASE	13-Jun-2015	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-flow	1.0.0.RELEASE	10-Feb-2015	pom  jar  dist.zip  javadoc.jar  schema.zip  sources.jar  
+org.springframework.integration	spring-integration-smpp	1.0.0.RELEASE	10-Feb-2015	pom  jar  dist.zip  docs.zip  javadoc.jar  schema.zip  sources.jar  
+org.springframework.integration	spring-integration-splunk	1.1.0.RELEASE	24-Jul-2014	pom  jar  javadoc.jar  sources.jar  
+org.springframework.integration	spring-integration-httpinvoker	2.0.6.RELEASE  all (11)	12-Apr-2012	pom  jar  sources.jar  
+org.springframework.integration	spring-integration-parent	1.0.4.RELEASE  all (4)	17-Apr-2010	pom  
+org.springframework.integration	spring-integration-adapter	1.0.4.RELEASE  all (5)	17-Apr-2010	pom  jar  sources.jar  
+org.springframework.integration	spring-integration-samples	1.0.2.SR1  all (3)	18-Apr-2009	pom  jar  sources.jar  

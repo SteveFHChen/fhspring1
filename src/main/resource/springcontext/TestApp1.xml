@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:ctx="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+	   xsi:schemaLocation="  
+		    http://www.springframework.org/schema/beans 
+		    http://www.springframework.org/schema/beans/spring-beans.xsd
+		    http://www.springframework.org/schema/context 
+		    http://www.springframework.org/schema/context/spring-context.xsd
+		    http://www.springframework.org/schema/task
+		    http://www.springframework.org/schema/task/spring-task.xsd">
+        
+    <!-- <bean name="person1" class="com.fh.dto.Person">
+    	<property name="id" value="1001"></property>
+    	<property name="name" value="Steve1"></property>
+    </bean>
+    
+    <bean name="person2" class="com.fh.dto.Person">
+    	<property name="id" value="1002"></property>
+    	<property name="name" value="Steve2"></property>
+    </bean> -->
+    
+    <!-- <ctx:component-scan base-package="com.fh.service;com.fh.postprocessor"/> -->
+    <!-- <ctx:component-scan base-package="com.fh.config"/> -->
+    <bean name="appConfig" class="com.fh.config.AppConfig">
+    	<property name="dbDriver" value="${jdbc.driver}"></property>
+    </bean>
+    
+    <!-- <ctx:annotation-config/> -->
+    <ctx:property-placeholder location="classpath:springcontext/testapp1.properties"/>
+    
+    <task:scheduler id="fhscheduler" pool-size="5"></task:scheduler>
+    
+    <task:scheduled-tasks scheduler="fhscheduler">
+    	<task:scheduled ref="appConfig" method="sayHello" cron="0 */1 * * * *"></task:scheduled>
+    </task:scheduled-tasks>
+</beans>

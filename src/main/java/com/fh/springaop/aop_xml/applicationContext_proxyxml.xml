@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+	<bean id="myadvice" class="com.aop_xml.MyAdvice"></bean>
+	<bean id="studenttarget" class="com.aop_xml.StudentImpl"></bean>
+	
+	<!-- 配制方式1： -->
+	<!-- 这里可以通过定义pointcut设置正则表达式来决定哪些method有效 -->
+	<!-- <bean id="myPointCut1" class="org.springframework.aop.support.JdkRegexpMethodPointcut">
+		<property name="pattern" value=".*Student"></property>
+	</bean>
+	<bean id="myAdvisor1" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="advice" ref="myadvice"></property>
+		<property name="pointcut" ref="myPointCut1"></property>
+	</bean>
+	<bean id="student" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>com.aop_xml.IStudent</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>myAdvisor1</value>
+			</list>
+		</property>
+		<property name="target">
+			<ref bean="studenttarget"/>
+		</property>
+	</bean> -->
+	
+	<!-- 配制方式2： -->
+	<!-- <bean id="student" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>com.aop_xml.IStudent</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>myadvice</value>
+			</list>
+		</property>
+		<property name="target">
+			<ref bean="studenttarget"/>
+		</property>
+	</bean> -->
+	
+	<!-- 配制方式3： -->
+	<!-- DefaultAdvisorAutoProxyCreator Spring提供了一种自动代理的功能，能让切点跟通知自动进行匹配 -->
+	<bean id="myPointCut1" class="org.springframework.aop.support.JdkRegexpMethodPointcut">
+		<property name="pattern" value=".a*Student"></property>
+	</bean>
+	<bean id="myAdvisor1" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="advice" ref="myadvice"></property>
+		<property name="pointcut" ref="myPointCut1"></property>
+	</bean>
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"></bean>
+	<!-- 注意：此这拿的就不是代理类对象student了，而是student接口的实现类studenttarget对象 -->
+	
+	<!-- 这种AOP编程方式称为经典的基于代理的AOP -->
+	<!-- 通过org.springframework.aop.framework.ProxyFactoryBean来实现AOP编程 -->
+</beans>

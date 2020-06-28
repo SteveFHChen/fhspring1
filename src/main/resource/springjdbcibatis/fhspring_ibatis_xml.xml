@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans.xsd    
+        http://www.springframework.org/schema/context     
+        http://www.springframework.org/schema/context/spring-context.xsd    
+       http://www.springframework.org/schema/tx     
+       http://www.springframework.org/schema/tx/spring-tx.xsd    
+       http://www.springframework.org/schema/aop     
+       http://www.springframework.org/schema/aop/spring-aop.xsd   
+      ">
+    <!-- spring加载properties配制文件 方式1 -->
+	<!-- <context:property-placeholder location="classpath:/springjdbcibatis/db.properties"/> -->
+		<!-- 如果有多个properties，则用逗号隔开 -->
+    <!-- spring加载properties配制文件 方式2 -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>classpath:/springjdbcibatis/db.properties</value>
+            <!-- <value>classpath:2.properties</value>
+            <value>classpath:3.properties</value> -->
+            <!-- 如果有多个properties，则用多个<value> -->
+        </property>
+    </bean>
+    
+    <!-- 利用spring配制数据源 -->
+    <!-- 方式1：使用c3p0(实验成功) -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+    	<property name="driverClass" value="${jdbc.connect.driver}"></property>
+    	<property name="jdbcUrl" value="${jdbc.connect.url}"></property>
+    	<property name="user" value="${jdbc.connect.user}"></property>
+    	<property name="password" value="${jdbc.connect.password}"></property>
+    </bean>
+    <!-- 方式2：使用dbcp(实验成功) -->
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.connect.driver}"></property>
+    	<property name="url" value="${jdbc.connect.url}"></property>
+    	<property name="username" value="${jdbc.connect.user}"></property>
+    	<property name="password" value="${jdbc.connect.password}"></property>
+	</bean> -->
+    <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation">
+			<!-- sql map配置文件的入口文件，如果添加了一个sqlmap文件，只要在下面的入口文件中加入相应的选项即可 -->
+			<value>classpath:/springjdbcibatis/ibatis/fhtest1-config.xml</value>
+		</property>
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- 报错：java.lang.NoClassDefFoundError: com/ibatis/common/xml/NodeletException 
+		 原因：没有加载spring-ibatis Jar包。 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<bean id="daoimpl1" class="com.fh.springibatis.repository.impl.PersonRepository5Impl">  
+	   <property name="dataSource">  
+	   <ref bean="dataSource"/>  
+	 </property>  
+	  <property name="sqlMapClient">  
+	    <ref bean="sqlMapClient"/>  
+	  </property>  
+	</bean>
+	
+	<bean id="serviceimpl1" class="com.fh.springibatis.service.impl.PersonService5Impl">
+	    <property name="personRepository5">
+	        <ref bean="daoimpl1"/>
+	    </property>
+	</bean>
+	
+	<!-- Using AOP to print sql and parameters to log file or console, instead of using extends -->
+	<!-- <bean id="logAspect" class="com.fh.springibatis.aop.LogAspect"></bean> -->
+	<!-- 写法1：使用aspect进行处理 -->
+	<!-- <aop:config>
+		<aop:aspect id="fhasp1" ref="logAspect">
+			<aop:before pointcut="execution(* com.ibatis.sqlmap.engine.execution.SqlExecutor.executeUpdate(..))" method="doBefore"/>
+		</aop:aspect>
+	</aop:config> -->
+</beans>

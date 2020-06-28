@@ -1,0 +1,16 @@
+﻿本实验测试了Spring-Ibatis的使用，并对原理源代码进行了分析。
+
+本实验代码：
+测试使用
+1. 纯XMl配制方式 TestApp1SpringIbatisByXML
+2. XML+Annotations配制方式 TestApp2SpringIbatisByXMLAnnotation
+3. 纯Annotation配制方式 TestApp3SpringIbatisByAnnotation
+4. 测试Spring Transaction进行事务管理
+
+Service和Dao层都有2套：
+4这套是用于测试Annotation配制
+5这套是用于测试XML配制
+6这套是用于测试Spring Transaction配制
+
+spring 中常用的两种事务配置方式以及事务的传播性、隔离级别
+http://m.blog.csdn.net/article/details?id=51811533
